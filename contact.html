@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact &mdash; Packnet Holdings</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="nav-row">
+    <a href="index.html" class="logo">Packnet <span>Holdings</span></a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Menu">Menu</button>
+  </div>
+</header>
+
+<section class="hero section-tight">
+  <div class="wrap">
+    <div class="eyebrow-line"></div>
+    <h1 style="font-size: clamp(30px, 4vw, 44px);">Let's talk about your business.</h1>
+    <p class="lede">Your first consultation is free. Send a message or reach us directly below.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="wrap split">
+    <div class="form-panel">
+      <h2>Drop us a line</h2>
+      <p>We usually reply within one business day.</p>
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@company.com" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" placeholder="Tell us what you need help with" required></textarea>
+
+        <div id="form-error" style="display:none; color:#F0997B; font-size:13px; margin-bottom:14px;"></div>
+        <div id="form-success" style="display:none; color:#9FE1CB; font-size:14px; margin-bottom:14px;">Thanks &mdash; we'll be in touch shortly.</div>
+
+        <button type="submit" class="btn btn-primary" style="border: none; width: 100%; cursor: pointer;">Send message</button>
+      </form>
+    </div>
+
+    <div class="contact-details">
+      <h2 class="section-head" style="font-size: 22px;">Reach us directly</h2>
+      <div class="row">
+        <span class="label">Address</span>
+        <span class="value">Plot 59707, Peolwane, Gaborone, Botswana</span>
+      </div>
+      <div class="row">
+        <span class="label">Phone</span>
+        <span class="value">+267 72 600 846<br>+267 74 758 688</span>
+      </div>
+      <div class="row">
+        <span class="label">Email</span>
+        <span class="value">admin@packnetholdings.com</span>
+      </div>
+      <div class="row">
+        <span class="label">Hours</span>
+        <span class="value">Monday &ndash; Friday, 8:00 &ndash; 17:00</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-row">
+      <div>
+        <a href="index.html" class="logo">Packnet <span>Holdings</span></a>
+        <p style="max-width: 280px; font-size: 14px; margin-top: 14px;">Plot 59707, Peolwane, Gaborone, Botswana</p>
+      </div>
+      <nav class="links" style="flex-direction: column; gap: 10px;">
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="resources.html">Resources</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div>
+        <p style="font-size: 13px; color: var(--moss); margin: 0 0 6px;">Phone</p>
+        <p style="margin: 0 0 16px;">+267 72 600 846</p>
+        <p style="font-size: 13px; color: var(--moss); margin: 0 0 6px;">Email</p>
+        <p style="margin: 0;">admin@packnetholdings.com</p>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>&copy; 2026 Packnet Holdings (Proprietary) Limited</span>
+      <span class="social">
+        <a href="https://web.facebook.com/profile.php?id=100093030856734" target="_blank" rel="noopener">Facebook</a><a href="https://www.linkedin.com/in/ephraim-musarurwa-37020131/" target="_blank" rel="noopener">LinkedIn</a><a href="https://twitter.com/Ephmusa" target="_blank" rel="noopener">Twitter</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var name = document.getElementById('name').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var message = document.getElementById('message').value.trim();
+  var errorBox = document.getElementById('form-error');
+  var successBox = document.getElementById('form-success');
+  successBox.style.display = 'none';
+
+  if (!name || !email || !message) {
+    errorBox.textContent = 'Please fill in every field before sending.';
+    errorBox.style.display = 'block';
+    return;
+  }
+  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    errorBox.textContent = 'Please enter a valid email address.';
+    errorBox.style.display = 'block';
+    return;
+  }
+  errorBox.style.display = 'none';
+
+  var form = this;
+  var submitBtn = form.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(function (response) {
+    if (response.ok) {
+      successBox.style.display = 'block';
+      form.reset();
+    } else {
+      errorBox.textContent = 'Something went wrong sending your message. Please try again or email us directly.';
+      errorBox.style.display = 'block';
+    }
+  }).catch(function () {
+    errorBox.textContent = 'Something went wrong sending your message. Please try again or email us directly.';
+    errorBox.style.display = 'block';
+  }).finally(function () {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send message';
+  });
+});
+
+</script>
+<script src="app.js"></script>
+
+</body>
+</html>
