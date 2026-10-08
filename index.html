@@ -66,6 +66,8 @@
       letter-spacing: -0.04em;
       color: var(--navy);
       font-weight: 700;
+      line-height: 1;
+      display: inline-block;
     }
     .brand span { color: var(--gold); }
 
@@ -86,6 +88,10 @@
     .nav-links a:hover, .nav-links a.active {
       color: var(--gold);
       opacity: 1;
+    }
+    .nav-links a.nav-accsol {
+      font-weight: 600;
+      border-bottom: 2px solid var(--gold);
     }
 
     .menu-button {
@@ -385,6 +391,10 @@
       line-height: 1;
       color: var(--gold);
       transition: transform 0.2s ease;
+      display: inline-block;
+      min-width: 18px;
+      text-align: center;
+      font-weight: 700;
     }
     .service-trigger.is-open .service-indicator {
       transform: rotate(45deg);
@@ -688,6 +698,7 @@
         <a href="#projects" data-page="projects">Projects</a>
         <a href="#blog" data-page="blog">Blog</a>
         <a href="#resources" data-page="resources">Resources</a>
+        <a href="accsol.html" class="nav-accsol">Accsol</a>
         <a href="#contact" data-page="contact">Contact</a>
       </nav>
       <button class="menu-button" aria-label="Toggle menu">Menu</button>
@@ -1017,6 +1028,7 @@
           <a href="#projects" data-page="projects">Projects</a>
           <a href="#blog" data-page="blog">Blog</a>
           <a href="#resources" data-page="resources">Resources</a>
+          <a href="accsol.html">Accsol</a>
           <a href="#contact" data-page="contact">Contact</a>
         </nav>
       </div>
@@ -1114,23 +1126,35 @@
     }
 
     document.querySelectorAll('.service-trigger').forEach(button => {
+      const indicator = button.querySelector('.service-indicator');
+      const updateIndicator = (isOpen) => {
+        if (indicator) {
+          indicator.textContent = isOpen ? '×' : '+';
+        }
+      };
+
+      updateIndicator(button.classList.contains('is-open'));
+
       button.addEventListener('click', function() {
         const allTriggers = document.querySelectorAll('.service-trigger');
         const allPanels = document.querySelectorAll('.service-panel');
+        const panel = this.nextElementSibling;
+        const isOpen = this.classList.contains('is-open');
 
         allTriggers.forEach(item => {
           item.classList.remove('is-open');
           item.setAttribute('aria-expanded', 'false');
+          const itemIndicator = item.querySelector('.service-indicator');
+          if (itemIndicator) itemIndicator.textContent = '+';
         });
-        allPanels.forEach(panel => panel.hidden = true);
 
-        const panel = this.nextElementSibling;
-        const isOpen = this.classList.contains('is-open');
+        allPanels.forEach(panelItem => panelItem.hidden = true);
 
         if (!isOpen) {
           this.classList.add('is-open');
           this.setAttribute('aria-expanded', 'true');
           if (panel) panel.hidden = false;
+          updateIndicator(true);
         }
       });
     });
